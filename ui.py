@@ -1,4 +1,5 @@
 from tkinter import *
+from quiz_brain import QuizBrain
 
 THEME_COLOR = "#375362"
 QUESTION_BG = "#F9F9F9"
@@ -13,7 +14,9 @@ FONT_FOOTER = ("Arial", 9, "italic")
 
 class QuizInterface:
 
-    def __init__(self):
+    def __init__(self, quiz_brain: QuizBrain):
+        self.quiz = quiz_brain
+
         self.window = Tk()
         self.window.title("Quizzler")
         self.window.config(pady=20, padx=20, bg=THEME_COLOR)
@@ -79,5 +82,10 @@ class QuizInterface:
         )
         self.footer.grid(row=4, column=0, columnspan=2, pady=(15, 0))
 
+        self.get_next_question()
+
         self.window.mainloop()
 
+    def get_next_question(self):
+        q_text = self.quiz.next_question()
+        self.canvas.itemconfig(self.question, text=q_text)
